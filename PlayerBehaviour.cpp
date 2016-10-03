@@ -6,7 +6,8 @@
 #include <Engine/Components/InputComponent.h>
 #include <Engine/Managers/SpawnManager.h>
 #include <Core/Game/Game.h>
-#include <Core/GameManagers/IGameTime.h>
+#include <Core/GameManagers/ITimeManager.h>
+#include <Core/Logging/Logger.h>
 #include <Engine/Components/SimulationComponent.h>
 #include <PxPhysicsAPI.h>
 #include <iostream>
@@ -19,12 +20,12 @@ void PlayerBehaviour::update( const GameObjectRef &iGameObject )
 	std::shared_ptr<IKeyboardInputInterface> keyboardInput = iGameObject->as<IKeyboardInputInterface>();
 
 	static float kRotateStep = 0.02f; // angle in radians
-	if (keyboardInput->isPressed(KEY_CTRLBUTTON))
+	if (keyboardInput->isPressed(ControllerKey::KEY_CTRLBUTTON))
 	{
 		WeaponComponentInterfaceRef weapon = iGameObject->as<IWeaponComponentInterface>();
 		if (weapon == nullptr)
 		{
-			std::cout << "No weapon" << std::endl;
+			LOG_INFO("No weapon");
 		}
 		else
 		{

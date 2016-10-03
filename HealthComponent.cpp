@@ -7,7 +7,8 @@
 #include "IShieldComponentInterface.h"
 #include <iostream>
 #include <Core/Game/Game.h>
-#include <Core/GameManagers/IGameSpawner.h>
+#include <Core/GameManagers/ISpawnManager.h>
+#include <Core/Logging/Logger.h>
 
 //=============================================================================
 // CLASS HealthComponent
@@ -25,7 +26,7 @@ void HealthComponent::setHealth(float iHealth)
 void HealthComponent::changeHealth(float iDeltaHealth)
 {
 	_health += iDeltaHealth;
-	std::cout << "Health: " << _health << std::endl;
+	LOG_INFO("Health: %f", _health);
 }
 
 float HealthComponent::getHealth()

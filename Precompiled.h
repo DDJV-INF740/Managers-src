@@ -24,3 +24,10 @@
 
 #endif // _NOPCH
 
+using namespace std;
+
+#include "PxPhysicsAPI.h"
+using namespace physx;
+
+#include "Core/GameObjects/IGameObject.h"
+using namespace engine;

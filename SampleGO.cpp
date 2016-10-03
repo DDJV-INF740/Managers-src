@@ -4,6 +4,7 @@
 #include "Core/GameObjects/IGameObject.h"
 #include "Core/GameObjects/IGameObjectData.h"
 #include "Core/GameObjects/GameObjectFactory.h"
+#include "Core/Logging/Logger.h"
 #include "Engine/GameObjects/GameObject.h"
 #include "HealthComponent.h"
 #include <iostream>
@@ -37,16 +38,16 @@ public:
 
 	//-------------------------------------------------------------------------
 	//
-	SampleGOImp(const IGameObjectDataRef &aDataRef)
+	SampleGOImp(const GameObjectDataRef &aDataRef)
 		: GameObject(aDataRef)
 	{}
 
 public:
 	virtual void onSpawn(const physx::PxTransform &aPose) override
 	{
-		std::cout << "on spawn" << std::endl;
+		LOG_INFO("on spawn");
 
-		HealthComponentRef health = addComponent<HealthComponent>();
+		HealthComponentRef health = ensureComponent<HealthComponent>();
 		health->setHealth(1.0f);
 	}
 

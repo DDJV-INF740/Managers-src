@@ -11,7 +11,7 @@
 // CLASS WeaponComponent
 //=============================================================================
 class WeaponComponent :
-	public GameObjectComponent<WeaponComponent>,
+	public engine::GameObjectComponent<WeaponComponent>,
 	virtual public IWeaponComponentInterface
 {
 public:
@@ -27,13 +27,13 @@ public:
 		return sInterfaces;
 	}
 
-	virtual void onAttached(const GameObjectRef &iGameObject) override
+	virtual void onAttached(const engine::GameObjectRef &iGameObject) override
 	{
 		GameObjectComponent::onAttached(iGameObject);
 		_go = iGameObject;
 	}
 
-	virtual void onDetached(const GameObjectRef &iGameObject) override
+	virtual void onDetached(const engine::GameObjectRef &iGameObject) override
 	{
 		_go.reset();
 		GameObjectComponent::onDetached(iGameObject);

@@ -7,7 +7,7 @@
 //=============================================================================
 // INTERFACE IDamageComponentInterface
 //=============================================================================
-class IDamageComponentInterface : virtual public IComponentInterface
+class IDamageComponentInterface : virtual public engine::IComponentInterface
 {
 public:
 	static IdType TypeId();

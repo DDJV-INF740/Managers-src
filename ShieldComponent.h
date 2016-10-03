@@ -10,11 +10,11 @@
 // CLASS ShieldComponent
 //=============================================================================
 class ShieldComponent :
-	public GameObjectComponent<ShieldComponent>,
+	public engine::GameObjectComponent<ShieldComponent>,
 	virtual public IShieldComponentInterface
 {
 public:
-	static IComponent::IdType TypeId();
+	static engine::IComponent::IdType TypeId();
 
 	static IComponentInterface::IdType* Interfaces()
 	{

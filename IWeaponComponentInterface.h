@@ -8,7 +8,7 @@
 //=============================================================================
 // INTERFACE IWeaponComponentInterface
 //=============================================================================
-class IWeaponComponentInterface : virtual public IComponentInterface
+class IWeaponComponentInterface : virtual public engine::IComponentInterface
 {
 public:
 	static IdType TypeId();

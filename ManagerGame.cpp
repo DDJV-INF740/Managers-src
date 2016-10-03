@@ -62,27 +62,26 @@ public:
 
 	virtual bool init() override
 	{
+		ensureComponent<WindowManager>();
+		ensureComponent<RenderManager>();
+		ensureComponent<SimulationManager>();
+		ensureComponent<SpawnManager>();
+		ensureComponent<AIManager>();
+		ensureComponent<PlayerManager>();
+		ensureComponent<CameraManager>();
+		ensureComponent<GameLoopManager>();
+		ensureComponent<TimeManager>();
+
+		addTask<SpawnTask>(SPAWNTASK);
+		addTask<RenderTask>(RENDERTASK);
+		addTask<PlayerTask>(PLAYERTASK);
+		addTask<InputTask>(INPUTTASK);
+		addTask<AITask>(AITASK);
+		addTask<GameRulesTask>(GAMERULESTASK);
+		addTask<PhysicsTask>(PHYSICSTASK);
+		addTask<TimeTask>(TIMERTASK);
+
 		GameEngine::init();
-
-		addComponent<WindowManager>();
-		addComponent<RenderManager>();
-		addComponent<SimulationManager>();
-		addComponent<SpawnManager>();
-		addComponent<AIManager>();
-		addComponent<PlayerManager>();
-		addComponent<CameraManager>();
-		addComponent<GameLoopManager>();
-		addComponent<TimeManager>();
-
-		addTask(new SpawnTask, SPAWNTASK);
-		addTask(new RenderTask, RENDERTASK);
-		addTask(new PlayerTask, PLAYERTASK);
-		addTask(new InputTask, INPUTTASK);
-		addTask(new AITask, AITASK);
-		addTask(new GameRulesTask, GAMERULESTASK);
-		addTask(new PhysicsTask, PHYSICSTASK);
-		addTask(new TimeTask, TIMERTASK);
-
 		loadLevel();
 		return true;
 	}
@@ -103,36 +102,33 @@ public:
 	void unloadLevel()
 	{
 		// unspawn every remaining objects
-		Game<IGameSpawner>()->unspawnAll();
-		Game<IGameSpawner>()->update();
+		Game<ISpawnManager>()->unspawnAll();
+		Game<ISpawnManager>()->update();
 	}
 };
 
 
 
-GameEngineRef IGameEngine::Instance()
+GameEngineRef& IGameEngine::Instance()
 {
 	static GameEngineRef sGame(new ManagerGame);
 	return sGame;
 }
 
 
-
-
-
 void ManagerGame::loadLevel()
 {
 	// spawn the player
-	GameObjectRef _player = Game<IGameSpawner>()->spawn<SampleGO>(PxTransform(PxVec3(0, 0, 0)));
-	_player->addComponent<KeyboardInputComponent>();
-	_player->addComponent<PlayerComponent>()->setBehaviour(IBehaviourRef(new PlayerBehaviour));
+	GameObjectRef _player = Game<ISpawnManager>()->spawn<SampleGO>(PxTransform(PxVec3(0, 0, 0)));
+	_player->ensureComponent<KeyboardInputComponent>();
+	_player->ensureComponent<PlayerComponent>()->setBehaviour(IBehaviourRef(new PlayerBehaviour));
 
-	_player->addComponent<WeaponComponent>();
+	_player->ensureComponent<WeaponComponent>();
 
-	Game<IGameSpawner>()->spawn<ICamera>(PxTransform(PxVec3(0, 0, 0)));
+	Game<ISpawnManager>()->spawn<ICamera>(PxTransform(PxVec3(0, 0, 0)));
 
 	// spawn an enemy
-	Game<IGameSpawner>()->spawn<SampleGO>(PxTransform(PxVec3(0, 0, 0)));
+	Game<ISpawnManager>()->spawn<SampleGO>(PxTransform(PxVec3(0, 0, 0)));
 }
 
 

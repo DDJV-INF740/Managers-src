@@ -11,6 +11,7 @@
 #include "SampleGO.h"
 #include <iostream>
 #include <Core/Components/IInputInterface.h>
+#include "Core/Logging/Logger.h"
 
 //=============================================================================
 // CLASS WeaponComponent
@@ -26,14 +27,14 @@ static bool isPlayer(const GameObjectRef go)
 
 void WeaponComponent::fire()
 {
-	GameSpawnerRef spawnManager = Game<IGameSpawner>();
+	GameSpawnerRef spawnManager = Game<ISpawnManager>();
 	const std::set<GameObjectRef> gameObjects = spawnManager->gameObjects();
 
 	// for now, all objects are SampleGO - we distinguish the player from the enemy
 	// because the player has a IInputInterface interface
 	if (gameObjects.size() == 1 && isPlayer(*gameObjects.begin()))
 	{
-		std::cout << "No more enemies" << std::endl;
+		LOG_INFO("No more enemies");
 	}
 	else
 	{
@@ -47,7 +48,7 @@ void WeaponComponent::fire()
 			if (damageInterface != NULL)
 			{
 				damageInterface->takeDamage(0.25);
-				std::cout << "pew!" << std::endl;
+				LOG_INFO("pew!");
 				break;
 			}
 		}
